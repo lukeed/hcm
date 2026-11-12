@@ -1,0 +1,25 @@
+[tools]
+zig = "0.15.2"
+jactionlint = "2.5.0"
+"aqua:nextest-rs/nextest/cargo-nextest" = "0.9.146"
+"github:rust-cross/cargo-zigbuild" = "0.24.1"
+
+[tools.rust]
+version = "1.99.1"
+profile = "default"
+components = ["clippy", "rustfmt"]
+
+[tasks.check]
+depends = ["fmt", "clippy", "actionlint", "test"]
+
+[tasks.fmt]
+run = "cargo fmt --check"
+
+[tasks.clippy]
+run = "cargo clippy --all-targets --locked -- -D warnings"
+
+[tasks.actionlint]
+run = "jactionlint"
+
+[tasks.test]
+run = "cargo nextest run --locked"
